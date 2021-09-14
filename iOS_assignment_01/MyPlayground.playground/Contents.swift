@@ -72,8 +72,8 @@ print()
 /* CHESSBOARD */
 let rows = 8
 let cols = 10
-let square1 = "X"
-let square2 = " "
+let square1 = " "
+let square2 = "X"
 
 for current_row in 0...rows{
     str = ""
