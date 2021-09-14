@@ -1,0 +1,115 @@
+## FIZZ BUZZ
+list of numbers = 1..50
+string result=""
+for num in nums{
+	if num % 3 = 0 || num % 5 = 0{
+		result += string(num)
+	}else{	
+		if num % 3 = 0:
+			result += "FIZZ"
+		if num % 5 = 0:
+			result += "BUZZ"
+	}
+	if num != nums.count:
+		result += ", "
+}
+result += "\n Done."
+
+print(result)
+
+// First pattern (must be uneven num)
+let rows: Int = 9
+let middle= Int(rows/2)+1
+
+var str = ""
+var start = middle
+var end = middle
+for i in length{
+	for j in length{
+		if i == start{
+			str += "X" 
+			if( start != end){
+				for k in end-start{
+					str += "-"
+				}
+			}
+		}else{
+			str += " "
+		}
+	print(str)
+	if(start == 0){
+		start-=1
+		end+=1
+	}else{
+		start+=1
+		end-=1
+	}
+}
+
+// old code
+let rows: Int = 9
+let middle= rows/2
+
+var dashes = 0
+
+for i in 0...rows{
+    var str = "X"
+    if dashes != 0{
+        for _ in 1...dashes{
+            str += "-"
+        }
+        str += "X"
+    }
+    if( i >= middle){
+        dashes-=1
+    }else{
+        dashes 
+    }
+    print(str)
+}
+
+
+## second pattern
+rows = 8
+cols = 8
+
+int current row
+for current_row < rows{
+	string =""
+	for i=0 in cols:
+		string += "+-"
+		if i == cols-1:
+			string += "+"
+	print(string)
+	string =""
+
+	if(current_row != rows-1):
+		if(current_row % 2 == 0):
+			string = "| |X"
+		else:
+			string = "|X| "
+		 for i=0 in cols:
+			string += string
+			if i == cols-1:
+				string += "|"
+		print(string)
+}
+
+## babylonian method
+NUM = 100
+
+incumbent = NUM / 2
+iteration = 0
+
+while(finished(NUM,incumbent) != TRUE){
+	result = |incumbent**2 - NUM | / NUM
+	
+	print("Iteration ",i,": ")
+	print("\tab Value of si = ", incumbent)
+	print("\tab Value of |...", result)
+	
+	# realize I could do it without 
+	successor = (incumbent + NUM / incumbent) / 2
+	incumbent = successor
+	i++
+	 
