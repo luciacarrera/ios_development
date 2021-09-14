@@ -1,6 +1,10 @@
+// CS275
+// Lucia Carrera
+// iOS Assignment #1
+
 import UIKit
 
-// FIZZ BUZZ
+/* FIZZ BUZZ */
 let nums = Array(1...50)
 var result: String = ""
 
@@ -26,26 +30,37 @@ result += "\nDone."
 
 print(result)
 
+// space between exercises
 print()
 
-// First pattern (must be uneven num)
-let rows: Int = 9
-let middle = rows/2
 
-var dashes = 0
+/* FIRST PATTERN */
+let length: Int = 9
+let middle = Int(length/2)+1
 
-for i in 0...rows{
-    var str = "X"
-    if dashes != 0{
-        for _ in 1...dashes{
+var str = ""
+var start = middle
+var end = middle
+for i in 1...length{
+    for j in 1...length{
+        if j < start || j > end{
+            str += " "
+        }else if j > start && j < end{
             str += "-"
+        }else{
+            str += "X"
         }
-        str += "X"
-    }
-    if( i >= middle){
-        dashes-=1
-    }else{
-        dashes+=1
     }
     print(str)
+    str = ""
+    
+    if(i < middle){
+        start-=1
+        end+=1
+    }else{
+        start+=1
+        end-=1
+    }
 }
+
+// Cheatsheet for keyboard: ><{}|@#~€
