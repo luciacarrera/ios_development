@@ -98,8 +98,10 @@ for i in 1...length{
     }
 }
 
-// space between exercises
+
+/* new line between exercises */
 print()
+
 
 /* CHESSBOARD */
 // Description: Chessboard pattern created with ASCII characters
@@ -154,4 +156,42 @@ for current_row in 0...rows{
     result3 = ""
     
 }
+
+
+/* new line between exercises */
+print()
+
+
+/* BABYLONIAN METHOD */
+// Description: Algorithmn to get best approximation of square root of a number
+let num : Double = 3
+
+var incumbent = Double(num / 2)
+var iteration = 0
+var result4: Double = -3.444
+
+func finished(sqrtOf: Double, sqrtValue: Double) -> Bool{
+    var isfinished = true
+    
+    if abs(sqrtValue*sqrtValue - sqrtOf) < sqrtOf * pow(10,-8){
+        isfinished  = false
+    }
+    
+    return isfinished
+}
+
+while finished(sqrtOf: num, sqrtValue: incumbent){
+    result4 = abs(incumbent*incumbent - num ) / num
+    
+    print("Iteration ",iteration,": ")
+    print("\t Value of si = ", incumbent)
+    print("\t Value of |(s_i)^2 − x|/x= ", result4,"\n")
+    
+    // realize I could do it without
+    var successor = (incumbent + num / incumbent) / 2
+    incumbent = successor
+    iteration += 1
+}
+
+
 // Cheatsheet for keyboard: ><{}|@#~€
