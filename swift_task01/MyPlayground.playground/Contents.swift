@@ -164,34 +164,49 @@ print()
 
 /* BABYLONIAN METHOD */
 // Description: Algorithmn to get best approximation of square root of a number
-let num : Double = 3
+// Comments: pretty sure it could be restructured into a while loop but this works perfectly
+// and successor could possibly be removed but I think for readibility it is great
 
-var incumbent = Double(num / 2)
-var iteration = 0
-var result4: Double = -3.444
+// number to find square root is declared as constant
+let num : Double = 100
 
+// vars used in algorithm
+var incumbent : Double //current value of si
+var successor = num / 2 //si+1
+var iteration = 0 //to keep track of iteration # and for clarity in print statements
+
+// checks if the approximation of the square root is sufficient
 func finished(sqrtOf: Double, sqrtValue: Double) -> Bool{
-    var isfinished = true
     
+    // default value is false
+    var isfinished = false
+    
+    // if error small enough tells repeat-while loop to stop
     if abs(sqrtValue*sqrtValue - sqrtOf) < sqrtOf * pow(10,-8){
-        isfinished  = false
+        isfinished  = true
     }
     
     return isfinished
 }
 
-while finished(sqrtOf: num, sqrtValue: incumbent){
-    result4 = abs(incumbent*incumbent - num ) / num
-    
-    print("Iteration ",iteration,": ")
-    print("\t Value of si = ", incumbent)
-    print("\t Value of |(s_i)^2 − x|/x= ", result4,"\n")
-    
-    // realize I could do it without
-    var successor = (incumbent + num / incumbent) / 2
+repeat {
+    // updates incumbent from previous iteration
     incumbent = successor
+    
+    // constant for readibility
+    let result4 = abs(incumbent*incumbent - num ) / num
+    
+    print("Iteration \(iteration): ")
+    print("\t Value of si =", incumbent)
+    print("\t Value of |(s_i)^2 − x|/x=", result4,"\n")
+    
+    // successor is created to not overlap with incumbent, and so the finished won't skip iterations
+    successor = (incumbent + num / incumbent) / 2
+    
+    //updates iteration #
     iteration += 1
-}
+    
+} while !finished(sqrtOf: num, sqrtValue: incumbent)
 
 
 // Cheatsheet for keyboard: ><{}|@#~€
