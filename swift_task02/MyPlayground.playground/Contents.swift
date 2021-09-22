@@ -11,13 +11,13 @@ func printDict(_ dict:[ String : [String] ]){
     // case if array empty
     if dict.count == 0{
         print("(empty)")
-        
     }
     //case if not empty
     else{
         
         // loops over each state(key)
         for (key, arr) in dict {
+            // string var for correct printing of entire array
             var str = "\(key): "
             
             // adds each town to string (element of array from current state (key))
@@ -28,12 +28,13 @@ func printDict(_ dict:[ String : [String] ]){
                 if elem != arr[arr.count-1]{
                     str+=", "
                 }
-            }
+            }// ends inner for
+            
             // prints result string
-
            print(str)
-        }
-    }
+            
+        }// ends outer for
+    }// ends else
 }
 
 
@@ -55,8 +56,10 @@ func addEntry(to key: String, town: String, in dict: inout [ String : [String]])
             if townArr[i] == town{
                 townExists = true
             }
+            // increments counter
             i += 1
-        }
+            
+        }// ends while loop
         
         if townExists == false{
             townArr.append(town)
@@ -64,7 +67,8 @@ func addEntry(to key: String, town: String, in dict: inout [ String : [String]])
             dict[key] = townArr.sorted(by: <)
         }
         
-    }
+    } // ends outer if
+        
     // if key doesnt exist add new key with town string
     else{
         // create new key with array including town
@@ -99,19 +103,21 @@ func removeEntry(from key: String, town: String, in dict: inout [ String : [Stri
                     
                     // ends loop if found to not loop through entire array
                     townExists = true
-                }
+                }// ends inner if
+                
                 // counter increased
                 i += 1
-            }
-        }
+            }// ends while loop
+        }// ends second outer if
+        
         // removes key from dict if no towns exist for that State or in previous if array now zero
         // (not specified in instructions but shown in testing results)
         // two ifs are used because a programmer could manually add a State with an Empty town array
         if townArr.count == 0 {
             dict.removeValue(forKey: key)
         }
-    }
-    // if key doesnt exist in dict does nothing
+        
+    }// ends outer if
 }
 
 
@@ -129,21 +135,21 @@ func countEntries(for key: String, in dict: [ String : [String] ]) -> Int {
 
 
 /* TESTING FUNCTIONS */
-// added empty print statements for readability
+// added empty print statements for readability and tons of addEntry(...) to check if duplicates would appear or out of range index errors
 var stateInfo = [ String:[String] ] ()
+
 printDict(stateInfo)
 print()
 
 stateInfo["California"]
-addEntry(to: "Vermont", town: "Burlington", in: &stateInfo)
-addEntry(to: "Vermont", town: "Burlington", in: &stateInfo)
 
+addEntry(to: "Vermont", town: "Burlington", in: &stateInfo)
+addEntry(to: "Vermont", town: "Burlington", in: &stateInfo)
 addEntry(to: "Vermont", town: "Montpelier", in: &stateInfo)
 addEntry(to: "Vermont", town: "Williston", in: &stateInfo)
 addEntry(to: "Vermont", town: "South Burlington", in: &stateInfo)
 addEntry(to: "Vermont", town: "Winooski", in: &stateInfo)
 addEntry(to: "Vermont", town: "Winooski", in: &stateInfo)
-
 addEntry(to: "Massachusetts", town: "Boston", in: &stateInfo)
 addEntry(to: "Massachusetts", town: "Boston", in: &stateInfo)
 addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
@@ -151,14 +157,15 @@ addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
 addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
 addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
 addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
-
 addEntry(to: "Massachusetts", town: "Springfield", in: &stateInfo)
+
 printDict(stateInfo)
 print()
 
 removeEntry(from: "Vermont", town: "Montpelier", in: &stateInfo)
 removeEntry(from: "Vermont", town: "Colchester", in: &stateInfo)
 removeEntry(from: "Maine", town: "Portland", in: &stateInfo)
+
 printDict(stateInfo)
 print()
 
