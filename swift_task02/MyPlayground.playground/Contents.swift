@@ -3,10 +3,11 @@
 // Swift Assignment #2
 import UIKit
 
+
 /* DICTIONARY DECLARATION */
 // key will be US state names & entries will be arrays of cities/towns in each state
 var stateInfo = [ String : [String] ] ()
-stateInfo=["Vermont":["Montpelier","Burlington"],"Vemont":["Montpelier","Burlington"],]
+stateInfo=["Vermont":["Montpelier","Burlington"],"California":["LA"],]
 
 
 /* PRINT DICTIONARY FUNCTION */
@@ -41,17 +42,18 @@ func printDict(_ dict:[ String : [String] ]){
     print(str);
 }
 
+
 /* ADD ENTRY FUNCTION */
 func addEntry(to key: String, town: String, in dict: inout [ String : [String]]){
     
     // if exists adds town to key with boolean to check if key exist declared as var to be able to modify
-    if var stateExists = dict[key]{
+    if var townArr = dict[key]{
         // append to array (if let wouldnt be able to
         // & also cant if dict[key] because it is an optional)
-        stateExists.append(town)
+        townArr.append(town)
         
         // replace in correct place
-        dict[key] = stateExists
+        dict[key] = townArr
     }
     // if key doesnt exist add new key with town string
     else{
@@ -61,18 +63,65 @@ func addEntry(to key: String, town: String, in dict: inout [ String : [String]])
     }
 }
 
+
 /* REMOVE ENTRY FUNCTION */
 // removes specified town from entry or key if empty array for that key
 func removeEntry(from key: String, town: String, in dict: inout [ String : [String] ]){
-    // create var to remove from arr and check if exists?
-    var stateExists = dict[key]
-    // removes key from dict
-    dict.removeValue(forKey: key)
+    
+    // create var to remove from arr and check if exists (because dict[key] optional)
+    // also called optional binding
+    if var townArr = dict[key]{
+        
+        // checks if town Array of State is not empty
+        if townArr.count != 0 {
+            
+            // variable definitions to be able to break from while loop (townExists) and to loop through array (i)
+            var townExists = false
+            var i = 0
+            
+            // loop through array to see if town exists in array
+            while(townExists != true && i != townArr.count){
+                
+                // if it exists remove it from array and modify dictionary entry
+                if townArr[i] == town {
+                    townArr.remove(at: i)
+                    dict[key] = townArr
+                    
+                    // ends loop if found to not loop through entire array
+                    townExists = true
+                }
+                // counter increased
+                i += 1
+            }
+        }
+        // removes key from dict if no towns exist for that State
+        else{
+            dict.removeValue(forKey: key)
+        }
+    }
+    // if key doesnt exist in dict does nothing
+}
+
+
+/* COUNT ENTRIES FUNCTION */
+// Returns the number of entries in the array for the specified ky. If key not in dictionary then returns zero
+func countEntries(for key: String, in dict: [ String : [String] ]) -> Int {
+    var numEntries = 0
+    // optional binding
+    if let townArr = dict[key]{
+        numEntries = townArr.count
+    }
+    // What if key in dictionary but no towns? Also zero -> should be different results?
+    return numEntries
 }
 
 //testing
 printDict(stateInfo);
-addEntry(to: "Ve", town:"Winooski", in: &stateInfo);
+
+addEntry(to: "Vermont", town:"Winooski", in: &stateInfo);
 printDict(stateInfo);
-removeEntry(from: "V", town: "Winooski", in: &stateInfo)
-printDict(stateInfo);
+
+print(countEntries(for: "California", in: stateInfo))
+
+
+
