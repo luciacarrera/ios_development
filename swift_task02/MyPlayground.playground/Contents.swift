@@ -4,22 +4,13 @@
 import UIKit
 
 
-/* DICTIONARY DECLARATION */
-// key will be US state names & entries will be arrays of cities/towns in each state
-var stateInfo = [ String : [String] ] ()
-stateInfo=["Vermont":["Montpelier","Burlington"],"California":["LA"],]
-
-
 /* PRINT DICTIONARY FUNCTION */
 // prints each key and contents of each array of for key
-
 func printDict(_ dict:[ String : [String] ]){
-    // var string to print out
-    var str = ""
     
     // case if array empty
     if dict.count == 0{
-        str="(empty)"
+        print("(empty)")
         
     }
     //case if not empty
@@ -27,33 +18,52 @@ func printDict(_ dict:[ String : [String] ]){
         
         // loops over each state(key)
         for (key, arr) in dict {
-            str += "\(key): "
+            var str = "\(key): "
             
             // adds each town to string (element of array from current state (key))
             for elem in arr{
-                str+="\(elem) "
+                str+="\(elem)"
+                
+                // GRADUATE: prints towns with commas in between
+                if elem != arr[arr.count-1]{
+                    str+=", "
+                }
             }
-            
-            // next line
-            str+="\n"
+            // prints result string
+
+           print(str)
         }
     }
-    // prints result string
-    print(str);
 }
 
 
 /* ADD ENTRY FUNCTION */
 func addEntry(to key: String, town: String, in dict: inout [ String : [String]]){
     
-    // if exists adds town to key with boolean to check if key exist declared as var to be able to modify
+    // if exists adds town to key with boolean to check if key exist declared as var to be able to modify (optional binding)
     if var townArr = dict[key]{
-        // append to array (if let wouldnt be able to
-        // & also cant if dict[key] because it is an optional)
-        townArr.append(town)
         
-        // replace in correct place
-        dict[key] = townArr
+        // GRADUATE: variable created to make sure that if town already exists we dont add a duplicate to the array
+        var townExists = false
+        var i = 0
+        
+        // while loop to check all elements in array. Also optimal instead of for loop
+        // Reminder: while loop performs a set of statements until a condition becomes false.
+        while( i != townArr.count && !townExists){
+            
+            // if town exists then we
+            if townArr[i] == town{
+                townExists = true
+            }
+            i += 1
+        }
+        
+        if townExists == false{
+            townArr.append(town)
+            // GRADUATE: to sort alphabetically, we assume every entry is being added correctly if not we should but it outside this if statement
+            dict[key] = townArr.sorted(by: <)
+        }
+        
     }
     // if key doesnt exist add new key with town string
     else{
@@ -94,8 +104,10 @@ func removeEntry(from key: String, town: String, in dict: inout [ String : [Stri
                 i += 1
             }
         }
-        // removes key from dict if no towns exist for that State
-        else{
+        // removes key from dict if no towns exist for that State or in previous if array now zero
+        // (not specified in instructions but shown in testing results)
+        // two ifs are used because a programmer could manually add a State with an Empty town array
+        if townArr.count == 0 {
             dict.removeValue(forKey: key)
         }
     }
@@ -115,13 +127,52 @@ func countEntries(for key: String, in dict: [ String : [String] ]) -> Int {
     return numEntries
 }
 
-//testing
-printDict(stateInfo);
 
-addEntry(to: "Vermont", town:"Winooski", in: &stateInfo);
-printDict(stateInfo);
+/* TESTING FUNCTIONS */
+// added empty print statements for readability
+var stateInfo = [ String:[String] ] ()
+printDict(stateInfo)
+print()
 
-print(countEntries(for: "California", in: stateInfo))
+stateInfo["California"]
+addEntry(to: "Vermont", town: "Burlington", in: &stateInfo)
+addEntry(to: "Vermont", town: "Burlington", in: &stateInfo)
+
+addEntry(to: "Vermont", town: "Montpelier", in: &stateInfo)
+addEntry(to: "Vermont", town: "Williston", in: &stateInfo)
+addEntry(to: "Vermont", town: "South Burlington", in: &stateInfo)
+addEntry(to: "Vermont", town: "Winooski", in: &stateInfo)
+addEntry(to: "Vermont", town: "Winooski", in: &stateInfo)
+
+addEntry(to: "Massachusetts", town: "Boston", in: &stateInfo)
+addEntry(to: "Massachusetts", town: "Boston", in: &stateInfo)
+addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
+addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
+addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
+addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
+addEntry(to: "Massachusetts", town: "Beverly", in: &stateInfo)
+
+addEntry(to: "Massachusetts", town: "Springfield", in: &stateInfo)
+printDict(stateInfo)
+print()
+
+removeEntry(from: "Vermont", town: "Montpelier", in: &stateInfo)
+removeEntry(from: "Vermont", town: "Colchester", in: &stateInfo)
+removeEntry(from: "Maine", town: "Portland", in: &stateInfo)
+printDict(stateInfo)
+print()
+
+print("# entries for Vermont = \(countEntries(for: "Vermont", in: stateInfo))")
+print("# entries for Massachusetts = \(countEntries(for: "Massachusetts", in: stateInfo))")
+print("# entries for Maine = \(countEntries(for: "Maine", in: stateInfo))")
+print()
+
+addEntry(to: "Maine", town: "Orono", in: &stateInfo)
+printDict(stateInfo)
+print()
+
+removeEntry(from: "Maine", town: "Orono", in: &stateInfo)
+printDict(stateInfo)
 
 
 
