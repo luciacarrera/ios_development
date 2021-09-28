@@ -170,6 +170,7 @@ func sortFoodSmart(in food: Set<String>, with sortFunction: (String) -> Bool) ->
     return myResults
 }
 
+
 // helper closure to identify if food item is healthy or not
 let isHealthy = { (food: String) -> Bool in
     
@@ -192,23 +193,31 @@ let isHealthy = { (food: String) -> Bool in
             return false
         }
     }
-    // I realize there is many approaches to sort if healthy or not but I believe that for such a short list of exceptions
-    // this version is very effective without over-complicating itself and it could easily modifiable to add other healthy exceptions such as
-    // air-fried broccoli
+    // if it survives all the last loop then it is healthy
     return true
 }
 
+// I realize there is many approaches to sort if healthy or not but I believe that for such a short list of exceptions
+// this version is very effective without over-complicating itself and it could easily modifiable to add other healthy exceptions such as
+// air-fried broccoli
 
-/*
- // Another approach could be (but airfried broccoli would not work here)
-let isHealthy = { (food: String) -> Bool in
+
+
+
+ // Another approach to the healthy closure could be (but airfried broccoli would not work here)
+let isHealthy2 = { (food: String) -> Bool in
  
-     let healthyExceptions: Array<String> = ["sugar beets","sugar peas","sugar snap peas"]
+    // array of food exceptions that could be considered
+     let healthySugarnames: Array<String> = ["sugar beets","sugar peas","sugar snap peas"]
      let unhealthyExceptions: Array<String> = ["fried", "sugar", "sucre", "fritos"]
 
+    // loop that goes through all the unhealthy exceptions
      for i in unhealthyExceptions{
+ 
+        // when it specificly checks sugar it will see if it is part of the healthy exceptions with sugar in its name
+        // i == sugar so it does not check it when i is for example fritos
          if i == "sugar" && food.contains("sugar"){
-             for j in healthyExceptions{
+             for j in healthySugarnames{
                  if food == j {
                      return true
                  }
@@ -217,9 +226,10 @@ let isHealthy = { (food: String) -> Bool in
          }else if food.contains(i){
              return false
          }
+    }
+
      return true
  }
-*/
 
 
 
@@ -237,3 +247,18 @@ print("Sarah’s healthy foods: \(results.healthy)")
 print("Sarah’s unhealthy foods: \(results.unhealthy)")
 
 
+/* TESTING HEALTHY FOODS FUNCTION # 2 with isHealthy2 */
+/*
+print("\n\n")
+print("results, using smart discriminator")
+results = sortFoodSmart(in: myFoods, with: isHealthy2)
+print("my healthy foods: \(results.healthy)")
+print("my unhealthy foods: \(results.unhealthy)")
+let wifeFoods2: Set = ["bamba", "sugar snap peas", "eggs", "broccoli", "fried chicken"]
+
+print()
+print("Sarah’s groceries, using smart discriminator:")
+results = sortFoodSmart(in: wifeFoods2, with: isHealthy2)
+print("Sarah’s healthy foods: \(results.healthy)")
+print("Sarah’s unhealthy foods: \(results.unhealthy)")
+*/
