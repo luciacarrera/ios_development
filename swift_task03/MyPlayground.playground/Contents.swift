@@ -4,7 +4,7 @@
 import UIKit
 
 /* PRIMES AND COMPOSITES */
-// function that identifies if number is prime or not
+// helper function that identifies if number is prime or not
 func isPrime(_ val: Int) -> Bool?{
     
     // declaring of optional to return
@@ -92,8 +92,9 @@ print("Other nums: ", resultsPrime.other.sorted())
 // should print out the rest of the numbers
 print("Composite nums: ", resultsPrime.composite.sorted())
 
-// 2 newlines for readability
-print("\n\n")
+// newline for readability
+print()
+
 
 
 
@@ -138,8 +139,10 @@ print("my unhealthy foods: \(results.unhealthy)")
 print()
 
 
+
+
 /* HEALTHY FOODS FUNCTION # 2 */
-// second version of previous function that will more thoroughly check if food is healthy or not
+// second version of previous function that will more thoroughly check if items in food set are healthy or not
 func sortFoodSmart(in food: Set<String>, with sortFunction: (String) -> Bool) -> (healthy: Set<String>, unhealthy: Set<String>){
     
     // declaration of sets to return
@@ -149,11 +152,88 @@ func sortFoodSmart(in food: Set<String>, with sortFunction: (String) -> Bool) ->
     // checks every food item in set food
     for thisFood in food {
         
+        // asks helper closure if the current food item being evaluated is actually healthy
+        if sortFunction(thisFood){
+            // if the closure returns true then the food item is inserted into the healthy set
+            healthy.insert(thisFood)
+        }else{
+            // if not is it inserted into the unhealthy foods
+            unhealthy.insert(thisFood)
+        }
+        
     }
-    return ...
+    
+    // initialization of results tuple to return
+    let myResults = ( healthy, unhealthy)
+    
+    // returning tuple
+    return myResults
+}
+
+// helper closure to identify if food item is healthy or not
+let isHealthy = { (food: String) -> Bool in
+    
+    // array if healthy foods that could be considered unhealthy if
+    let healthyExceptions: Array<String> = ["sugar beets","sugar peas","sugar snap peas"]
+    
+    // checks if item is part of the healthyExceptions and if so immediately returns true
+    for item in healthyExceptions{
+        if food == item {
+            // == and not contains() so that fried sugar peas will be considered unhealthy
+            // this imposes another problem being that green sugar snap peas will be considered unhealthy
+            // decided not to keep going as problem description does not specify this should be sorted
+            return true
+        }
+    }
+    // checks if item is part of the unhealthyExceptions and if so immediately returns tr
+    let unhealthyExceptions: Array<String> = ["fried", "sugar", "sucre", "fritos"]
+    for item in unhealthyExceptions{
+        if food.contains(item){
+            return false
+        }
+    }
+    // I realize there is many approaches to sort if healthy or not but I believe that for such a short list of exceptions
+    // this version is very effective without over-complicating itself and it could easily modifiable to add other healthy exceptions such as
+    // air-fried broccoli
+    return true
 }
 
 
+/*
+ // Another approach could be (but airfried broccoli would not work here)
+let isHealthy = { (food: String) -> Bool in
+ 
+     let healthyExceptions: Array<String> = ["sugar beets","sugar peas","sugar snap peas"]
+     let unhealthyExceptions: Array<String> = ["fried", "sugar", "sucre", "fritos"]
+
+     for i in unhealthyExceptions{
+         if i == "sugar" && food.contains("sugar"){
+             for j in healthyExceptions{
+                 if food == j {
+                     return true
+                 }
+             }
+             return false
+         }else if food.contains(i){
+             return false
+         }
+     return true
+ }
+*/
+
+
+
 /* TESTING HEALTHY FOODS FUNCTION # 2 */
+print("results, using smart discriminator")
+results = sortFoodSmart(in: myFoods, with: isHealthy)
+print("my healthy foods: \(results.healthy)")
+print("my unhealthy foods: \(results.unhealthy)")
+let wifeFoods: Set = ["bamba", "sugar snap peas", "eggs", "broccoli", "fried chicken"]
+
+print()
+print("Sarah’s groceries, using smart discriminator:")
+results = sortFoodSmart(in: wifeFoods, with: isHealthy)
+print("Sarah’s healthy foods: \(results.healthy)")
+print("Sarah’s unhealthy foods: \(results.unhealthy)")
 
 
