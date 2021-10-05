@@ -69,6 +69,22 @@ func evensOdds(_ intArr: [Int]) -> (evens: Int, odds: Int) {
 
 
 /* FUNCTION #7 */
+func inSet(set: Set<String>) -> (String) -> Bool {
+    func f(_ e: String) -> Bool {
+        return set.contains(e)
+    }
+    return f
+}
+
+func listIntersection(_ setOne: Set<String>, with checker: (String) -> Bool) -> Set<String> {
+    let rtnval = setOne.filter{checker($0)}
+    return rtnval
+}
+func listDifference(_ setOne: Set<String>, with checker: (String) -> Bool) -> Set<String> {
+    let rtnval = setOne.filter{!checker($0)}
+    return rtnval
+}
+
 /* FUNCTION # */
 
 
@@ -103,5 +119,8 @@ let s6 = 0...10
 print(evensOdds(Array(s6)))
 
 // testing for function #7
-
+let myGroceries: Set = ["bugles", "beer", "carrots", "tapenade", "black licorice"]
+let wifeGroceries: Set = ["carrots", "bugles", "mushrooms", "mayonnaise"]
+print(listIntersection(myGroceries, with: inSet(set: wifeGroceries)))
+print(listDifference(myGroceries, with: inSet(set: wifeGroceries)))
 
