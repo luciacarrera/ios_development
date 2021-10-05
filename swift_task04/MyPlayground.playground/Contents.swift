@@ -58,8 +58,13 @@ func evensOdds(_ intArr: [Int]) -> (evens: Int, odds: Int) {
     // but you do need to use reduce(_:_:)
     // and you can choose to use an auxiliary function instead of an inline closure
 
-    let s = intArr.reduce(var evens = intArr.filter({$0 % 2 == 0}), var odd = intArr.filter({$0 % 2 != 0}))
-    return s
+    let evenNums = intArr.filter({i in i % 2 == 0})
+    let oddNums = intArr.filter({i in i % 2 != 0})
+
+    let evens = evenNums.reduce(0,{ i,j in i + 1 })
+    let odds = oddNums.reduce(0,{ i, j in i + 1 })
+
+    return (evens, odds)
 }
 
 
@@ -94,7 +99,8 @@ let s5 = ["a", "man", "a", "plan", "a", "canal", "panama"]
 print(concat(s5))
 
 // testing for function #6
-
+let s6 = 0...10
+print(evensOdds(Array(s6)))
 
 // testing for function #7
 
