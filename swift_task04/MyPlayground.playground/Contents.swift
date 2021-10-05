@@ -122,7 +122,29 @@ func listDifference(_ setOne: Set<String>, with checker: (String) -> Bool) -> Se
     return rtnval
 }
 
-/* FUNCTION # */
+/* GRADUATE FUNCTION #1 */
+// Rewrite evensOdds(_:) to use an inline closure.
+// count the number of even integers and odd integers
+// in the input array return the result as a named tuple
+func evensOdds2(_ intArr: [Int]) -> (evens: Int, odds: Int) {
+
+    return (evens: (intArr.filter{i in i % 2 == 0}).reduce(0,{ i,j in i + 1 }), (intArr.filter{i in i % 2 != 0}).reduce(0,{ i,j in i + 1 }))
+}
+
+
+
+/* GRADUATE FUNCTION #2 */
+func makeSieve(for val: Int) -> (Int) -> Bool{
+    
+    return isMarked
+}
+// sieveOfEratosthenes(100, makeSieve: makeSieve)
+func sieveOfEratosthenes(_ n: Int, makeSieve: (Int) -> (Int) -> Bool) -> [Int]{
+    let rtnArr = [2...n]
+    makeSieve
+    return rtnArr
+}
+
 
 
 /* TESTING FUNCTIONS */
@@ -161,3 +183,9 @@ let wifeGroceries: Set = ["carrots", "bugles", "mushrooms", "mayonnaise"]
 print(listIntersection(myGroceries, with: inSet(set: wifeGroceries)))
 print(listDifference(myGroceries, with: inSet(set: wifeGroceries)))
 
+// testing for graduate function #1
+let s8 = 0...10
+print(evensOdds2(Array(s8)))
+
+// testing for graduate function #2
+print(sieveOfEratosthenes(100, makeSieve: makeSieve))
